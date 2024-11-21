@@ -1,0 +1,17 @@
+{{- if .Values.persistence.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "anki-sync-server-helm.fullname" . }}
+  labels:
+    {{- include "anki-sync-server-helm.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.persistence.storageClassName }}
+  storageClassName: {{ . }}
+  {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.claimSize }}
+{{- end }}

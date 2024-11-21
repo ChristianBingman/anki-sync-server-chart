@@ -60,13 +60,11 @@ spec:
             - name: sync-data
               mountPath: /data
           {{- end }}
-      {{- with .Values.volumes }}
       {{- if .Values.persistence.enabled }}
       volumes:
         - name: sync-data
           persistentVolumeClaim:
             claimName: {{ include "anki-sync-server-helm.fullname" . }}
-      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
